@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { register, login } from '../controllers/users';
-import passport from "passport";
+import passport from 'passport';
 
 const router = Router();
 

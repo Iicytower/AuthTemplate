@@ -9,14 +9,13 @@ import { router as indexRouter } from './routes/index';
 
 const app: express.Application = express();
 
-
 passportConfig()
 
 app.set('x-powered-by', false);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser(process.env.SECRET ?? "secret"));
 
 app.use('/', indexRouter);
 
@@ -24,4 +23,5 @@ const PORT: number = Number(process.env.PORT ?? 3002);
 
 app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}!`);
+  console.log('---------------------------------------------');
 });
