@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { register, login } from '../controllers/user';
+import { register, login } from '../controllers/users';
+import passport from "passport";
 
 const router = Router();
 
@@ -10,6 +11,6 @@ const regexpPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[\!\@\#\$\%\^\&\*\(\)])(?=.*[A-
 // TODO add validation on routes.
 // In assumption both endpoints receive nickname(login) and password
 router.post('/register', register);
-router.post('/login', login);
+router.post('/login', passport.authenticate('local', { session: false, }), login);
 
 export { router };

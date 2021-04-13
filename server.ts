@@ -3,10 +3,14 @@ if (process.env.NODE_ENV !== 'production') dotenv.config();
 
 import express from 'express';
 import cookieParser from 'cookie-parser';
+import { passportConfig } from "./passport/configPassport";
 
 import { router as indexRouter } from './routes/index';
 
 const app: express.Application = express();
+
+
+passportConfig()
 
 app.set('x-powered-by', false);
 

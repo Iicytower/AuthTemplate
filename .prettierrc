@@ -6,5 +6,5 @@
   "bracketSpacing": true,
   "arrowParens": "avoid",
   "parser": "typescript",
-  "printWidth": 100
+  "printWidth": 90
 }
