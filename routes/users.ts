@@ -11,6 +11,6 @@ const regexpPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[\!\@\#\$\%\^\&\*\(\)])(?=.*[A-
 // TODO add validation on routes.
 // In assumption both endpoints receive nickname(login) and password
 router.post('/register', register);
-router.post('/login', passport.authenticate('local', { session: false, }), login);
+router.post('/login', passport.authenticate('local', { session: false }), login);
 
 export { router };

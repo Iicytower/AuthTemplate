@@ -52,16 +52,24 @@ export async function register(req: Request, res: Response) {
   if (!checkBody(req.body)) return res.status(400).json({ msg: 'Wrong object schema' });
   const { nickname, password } = req.body;
 
+  // This regexp allow password contain at least one small and big character, one digit and one special character.
+  // Allowed special characters ! @ # $ % ^ & * ( )
+  const regexpPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[\!\@\#\$\%\^\&\*\(\)])(?=.*[A-Z])(?!.*\s).{8,32}$/g;
+
+  if (!regexpPassword.test(password)) {
+    return res.status(400).json({
+      msg: `Password length must be between 8 and 32 characters and must contain at least one small and big character, one digit and one special character. Allowed special characters ! @ # $ % ^ & * ( )`,
+    });
+  }
+
   try {
     //is exist user
     const doesExist: boolean = !!findUser(nickname);
 
     if (!doesExist) {
-      return res
-        .status(403)
-        .json({
-          msg: `User with nickname ${nickname} exist. Choose different nickname.`,
-        });
+      return res.status(403).json({
+        msg: `User with nickname ${nickname} exist. Choose different nickname.`,
+      });
     }
 
     //register user
@@ -79,7 +87,7 @@ export async function register(req: Request, res: Response) {
       return res.status(500).json({ msg: 'Something goes wrong!' });
     }
 
-    return res.status(200).json({ msg: 'register!', result });
+    return res.status(201).json({ msg: 'register!', result });
   } catch (err) {
     console.error(err); // it should log into a file
     return res.status(500).json({ msg: 'Something goes wrong!' });
